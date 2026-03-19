@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>商家詳情 — 香港通</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div id="detailContent">
+  <div class="loading-state" style="padding-top:80px;">
+    <div class="spinner"></div>
+    <p>載入中…</p>
+  </div>
+</div>
+
+<div style="height:80px;"></div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="index.html"><span class="nav-icon">🏠</span>首頁</a>
+  <a class="nav-item" href="index.html"><span class="nav-icon">🔍</span>搜尋</a>
+  <a class="nav-item" href="#"><span class="nav-icon">🗺️</span>地圖</a>
+  <a class="nav-item" href="#"><span class="nav-icon">💬</span>問答</a>
+  <a class="nav-item" href="#"><span class="nav-icon">👤</span>我的</a>
+</nav>
+
+<script src="assets/app.js"></script>
+<script>
+const TOKEN = 'patFIhNaXmV8sQAep.0c5cd8ebd2d215b51b4e5b89595c6e9ece51101176dad89104c9e54d29c93ee4';
+const BASE = 'app38apVP58gOc2Gz';
+const TABLE = 'tblK3Zp28jh3uoSwt';
+
+const catEmoji = {
+  '銀行':'🏦','醫院':'🏥','餐廳':'🍜','地產':'🏠',
+  '法律':'⚖️','政府服務':'🏛️','教育':'🎓','超市':'🛒'
+};
+
+async function loadDetail() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) { window.location = 'index.html'; return; }
+
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${BASE}/${TABLE}/${id}`, {
+      headers: { 'Authorization': `Bearer ${TOKEN}` }
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    renderDetail(data);
+  } catch(e) {
+    document.getElementById('detailContent').innerHTML = `
+      <div class="loading-state" style="padding-top:80px;">
+        <div class="e-icon">⚠️</div><p>載入失敗</p>
+        <a href="index.html" style="color:var(--red);margin-top:12px;display:block;">返回首頁</a>
+      </div>`;
+  }
+}
+
+function renderDetail(record) {
+  const f = record.fields;
+  const name = f.name || f.Name || '未命名';
+  const cat = f.category || f.Category || '';
+  const district = f.district || f.District || '';
+  const address = f.address || f.Address || '';
+  const phone = f.phone || f.Phone || '';
+  const whatsapp = f.whatsapp || f.Whatsapp || '';
+  const hours = f.hours || f.Hours || '';
+  const desc = f.description || f.Description || '';
+  const rating = f.rating || f.Rating || '';
+  const emoji = catEmoji[cat] || '📍';
+
+  document.title = `${name} — 香港通`;
+
+  const stars = rating ? Math.round(parseFloat(rating)) : 0;
+  const starsHtml = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-hero">
+      <a class="detail-back" href="index.html">‹ 返回</a>
+      ${cat ? `<div class="detail-cat-badge">${emoji} ${cat}</div>` : ''}
+      <div class="detail-name">${name}</div>
+      <div class="detail-rating-row">
+        ${rating ? `<span class="detail-stars">${starsHtml}</span>
+        <span class="detail-rating-num">${parseFloat(rating).toFixed(1)}</span>` : ''}
+        ${district ? `<span class="detail-district">📍 ${district}</span>` : ''}
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-actions">
+        ${phone ? `<a class="detail-action-btn da-phone" href="tel:${phone}">📞 致電</a>` : '<div></div>'}
+        ${whatsapp ? `<a class="detail-action-btn da-whatsapp" href="https://wa.me/852${whatsapp}" target="_blank">💬 WhatsApp</a>`
+          : phone ? `<a class="detail-action-btn da-whatsapp" href="https://wa.me/852${phone.replace(/[-\s]/g,'')}" target="_blank">💬 WhatsApp</a>` : ''}
+      </div>
+
+      <div class="detail-info-card">
+        ${address ? `
+        <div class="detail-info-row">
+          <div class="detail-info-icon">📍</div>
+          <div><div class="detail-info-label">地址</div><div class="detail-info-val">${address}</div></div>
+        </div>` : ''}
+        ${phone ? `
+        <div class="detail-info-row">
+          <div class="detail-info-icon">📞</div>
+          <div><div class="detail-info-label">電話</div><div class="detail-info-val"><a href="tel:${phone}" style="color:var(--red);text-decoration:none;">${phone}</a></div></div>
+        </div>` : ''}
+        ${hours ? `
+        <div class="detail-info-row">
+          <div class="detail-info-icon">🕐</div>
+          <div><div class="detail-info-label">營業時間</div><div class="detail-info-val">${hours}</div></div>
+        </div>` : ''}
+        ${district ? `
+        <div class="detail-info-row">
+          <div class="detail-info-icon">🗺️</div>
+          <div><div class="detail-info-label">地區</div><div class="detail-info-val">${district}</div></div>
+        </div>` : ''}
+      </div>
+
+      ${desc ? `
+      <div class="sec-head" style="margin-top:16px;margin-bottom:8px;">
+        <div class="sec-title"><div class="sec-bar"></div>簡介</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px;font-size:13px;color:var(--ink2);line-height:1.7;">
+        ${desc}
+      </div>` : ''}
+
+      ${address ? `
+      <div class="sec-head" style="margin-top:16px;margin-bottom:8px;">
+        <div class="sec-title"><div class="sec-bar"></div>地圖</div>
+      </div>
+      <a href="https://maps.google.com/?q=${encodeURIComponent(address)}" target="_blank"
+        style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:13px;color:var(--blue);text-decoration:none;font-weight:700;">
+        🗺️ 在 Google Maps 查看
+      </a>` : ''}
+    </div>
+  `;
+}
+
+loadDetail();
+</script>
+</body>
+</html>

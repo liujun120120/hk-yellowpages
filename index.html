@@ -3,513 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>香港通</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-
-:root {
-  --red: #C8102E;
-  --red2: #E8192C;
-  --red-pale: #fff0f2;
-  --gold: #D4A017;
-  --ink: #111;
-  --ink2: #444;
-  --ink3: #888;
-  --ink4: #bbb;
-  --bg: #F5F4F0;
-  --white: #fff;
-  --border: #E8E6E0;
-  --blue: #1348B8;
-  --blue-pale: #EEF3FF;
-  --green: #0E7A4E;
-  --green-pale: #EDFAF3;
-  --amber: #C47A00;
-  --amber-pale: #FFF8E6;
-  --teal: #007B72;
-  --teal-pale: #E6F7F6;
-  --purple: #6B35B8;
-  --purple-pale: #F4EEFF;
-  --r: 12px;
-  --r-sm: 8px;
-  --r-lg: 18px;
-}
-
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-body {
-  font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 15px;
-  max-width: 420px;
-  margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 72px;
-}
-
-/* ── Header ── */
-header {
-  background: var(--white);
-  padding: 14px 16px 12px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--border);
-}
-.header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.logo-mark {
-  width: 34px; height: 34px;
-  background: var(--red);
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  color: white;
-  font-size: 17px;
-  font-weight: 900;
-  letter-spacing: -1px;
-}
-.logo-name {
-  font-size: 19px;
-  font-weight: 900;
-  color: var(--red);
-  letter-spacing: 2px;
-}
-.header-actions { display: flex; gap: 10px; align-items: center; }
-.lang-pill {
-  background: var(--red-pale);
-  color: var(--red);
-  border: 1px solid #f0c0c5;
-  border-radius: 20px;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.icon-btn {
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 8px;
-  background: var(--bg);
-  font-size: 18px;
-  cursor: pointer;
-}
-
-/* Search */
-.search-wrap {
-  display: flex;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  align-items: center;
-  padding: 0 12px;
-  gap: 8px;
-  height: 42px;
-}
-.search-wrap:focus-within {
-  border-color: var(--red);
-  background: var(--white);
-}
-.search-icon { font-size: 16px; color: var(--ink3); flex-shrink: 0; }
-.search-wrap input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--ink);
-}
-.search-wrap input::placeholder { color: var(--ink4); }
-.search-mic { font-size: 18px; color: var(--ink3); cursor: pointer; }
-
-/* ── Hero ── */
-.hero {
-  margin: 12px 14px;
-  background: linear-gradient(135deg, #8B0015 0%, var(--red) 55%, #E8192C 100%);
-  border-radius: var(--r-lg);
-  padding: 20px 18px;
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: '港';
-  position: absolute;
-  right: -8px; bottom: -24px;
-  font-size: 110px;
-  font-weight: 900;
-  color: rgba(255,255,255,.07);
-  letter-spacing: -2px;
-  line-height: 1;
-  pointer-events: none;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(255,255,255,.18);
-  border-radius: 20px;
-  padding: 3px 10px;
-  font-size: 11px;
-  margin-bottom: 10px;
-  letter-spacing: .5px;
-}
-.hero h1 {
-  font-size: 20px;
-  font-weight: 900;
-  line-height: 1.3;
-  margin-bottom: 6px;
-  letter-spacing: .5px;
-}
-.hero p {
-  font-size: 13px;
-  opacity: .85;
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
-.hero-btns { display: flex; gap: 8px; }
-.hbtn {
-  padding: 9px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-  text-decoration: none;
-  display: inline-block;
-}
-.hbtn-white { background: white; color: var(--red); }
-.hbtn-ghost { background: rgba(255,255,255,.18); color: white; border: 1px solid rgba(255,255,255,.35); }
-
-/* ── Live Strip ── */
-.live-strip {
-  display: flex;
-  gap: 8px;
-  padding: 0 14px;
-  margin: 10px 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.live-strip::-webkit-scrollbar { display: none; }
-.live-chip {
-  flex-shrink: 0;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 6px 12px;
-  font-size: 12px;
-  color: var(--ink2);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.live-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%,100% { opacity:1; }
-  50% { opacity:.4; }
-}
-
-/* ── Scene Cards ── */
-.scene-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 0 14px;
-  margin-bottom: 4px;
-}
-.scene-card {
-  border-radius: var(--r);
-  padding: 14px 13px;
-  cursor: pointer;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: transform .15s;
-  position: relative;
-  overflow: hidden;
-}
-.scene-card:active { transform: scale(.97); }
-.sc-immigrant { background: linear-gradient(135deg, #0A4A28, #0E7A4E); color: white; }
-.sc-tourist   { background: linear-gradient(135deg, #0B2FA8, #1348B8); color: white; }
-.scene-emoji { font-size: 26px; }
-.scene-card h3 { font-size: 14px; font-weight: 700; line-height: 1.3; }
-.scene-card p { font-size: 11px; opacity: .8; line-height: 1.5; }
-.scene-arrow {
-  position: absolute;
-  right: 10px; bottom: 10px;
-  opacity: .4;
-  font-size: 14px;
-}
-
-/* ── Section ── */
-.sec { margin: 14px 14px 0; }
-.sec-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.sec-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--ink);
-}
-.sec-bar {
-  width: 3px; height: 16px;
-  background: var(--red);
-  border-radius: 2px;
-}
-.sec-more {
-  font-size: 12px;
-  color: var(--ink3);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-/* ── Icon Grid ── */
-.icon-grid {
-  background: var(--white);
-  border-radius: var(--r);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 6px 0;
-  border: 1px solid var(--border);
-}
-.i-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  padding: 10px 4px 9px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background .15s;
-  border-radius: 8px;
-}
-.i-item:active { background: #fafafa; }
-.i-icon {
-  width: 46px; height: 46px;
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
-}
-.i-label {
-  font-size: 11px;
-  color: var(--ink2);
-  text-align: center;
-  line-height: 1.3;
-  white-space: nowrap;
-}
-
-/* ── Card List ── */
-.card-list {
-  background: var(--white);
-  border-radius: var(--r);
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-.card-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--ink);
-  transition: background .15s;
-}
-.card-item:last-child { border-bottom: none; }
-.card-item:active { background: #fafafa; }
-.card-num {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink4);
-  min-width: 18px;
-  margin-top: 2px;
-}
-.card-num.hot { color: var(--red); }
-.card-body { flex: 1; }
-.card-title { font-size: 13px; line-height: 1.5; color: var(--ink); }
-.card-meta { font-size: 11px; color: var(--ink3); margin-top: 3px; }
-.card-tag {
-  flex-shrink: 0;
-  font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 4px;
-  font-weight: 500;
-  margin-top: 2px;
-  align-self: flex-start;
-}
-.tag-new  { background: var(--amber-pale);  color: var(--amber); }
-.tag-hot  { background: var(--red-pale);    color: var(--red); }
-.tag-guide{ background: var(--blue-pale);   color: var(--blue); }
-.tag-qa   { background: var(--purple-pale); color: var(--purple); }
-
-/* ── Horizontal Scroll Cards ── */
-.h-scroll {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 2px 14px 4px;
-  scrollbar-width: none;
-  margin: 0 -0px;
-}
-.h-scroll::-webkit-scrollbar { display: none; }
-.h-card {
-  flex-shrink: 0;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--ink);
-  transition: transform .15s;
-  width: 148px;
-}
-.h-card:active { transform: scale(.97); }
-.h-card-icon { font-size: 28px; margin-bottom: 8px; }
-.h-card-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-.h-card-sub { font-size: 11px; color: var(--ink3); line-height: 1.5; }
-
-/* ── Emergency ── */
-.emg-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.emg-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
-.emg-card.red-card { background: #FFF0F2; border-color: #F0C0C5; }
-.emg-label { font-size: 11px; color: var(--ink2); margin-bottom: 2px; }
-.emg-num { font-size: 20px; font-weight: 900; color: var(--red); letter-spacing: 1px; font-variant-numeric: tabular-nums; }
-.emg-card .emg-icon { font-size: 24px; }
-
-/* ── Hot Tags ── */
-.tag-cloud {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 12px 12px 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-.hot-tag {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 12px;
-  color: var(--ink2);
-  cursor: pointer;
-  text-decoration: none;
-  transition: all .15s;
-  white-space: nowrap;
-}
-.hot-tag:active { background: var(--red-pale); color: var(--red); border-color: #f0c0c5; }
-.hot-tag.h { background: var(--red-pale); color: var(--red); border-color: #f0c0c5; }
-
-/* ── Tabs ── */
-.tabs {
-  display: flex;
-  background: var(--white);
-  border-radius: var(--r) var(--r) 0 0;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  overflow: hidden;
-}
-.tab {
-  flex: 1;
-  text-align: center;
-  padding: 10px 4px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink3);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all .15s;
-}
-.tab.active { color: var(--red); border-bottom-color: var(--red); background: var(--red-pale); font-weight: 700; }
-
-/* ── Bottom Nav ── */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 420px;
-  background: var(--white);
-  border-top: 1px solid var(--border);
-  display: flex;
-  z-index: 200;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  padding: 9px 0 7px;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--ink3);
-  font-size: 10px;
-  transition: color .15s;
-}
-.nav-item.active { color: var(--red); }
-.nav-icon { font-size: 22px; }
-.nav-dot {
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--red);
-  position: absolute;
-  top: 6px; right: calc(50% - 14px);
-}
-
-/* ── Spacing helpers ── */
-.gap { height: 14px; }
-.gap-sm { height: 8px; }
-</style>
+<title>香港通 — 新來港人士生活指南</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<!-- Header -->
 <header>
   <div class="header-top">
     <div class="logo">
@@ -523,43 +21,39 @@ header {
   </div>
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input type="text" placeholder="搜尋商家、服務、地址…" />
+    <input type="text" id="searchInput" placeholder="搜尋商家、服務、地址…" oninput="handleSearch(this.value)" />
     <span class="search-mic">🎙️</span>
   </div>
 </header>
 
-<!-- Live Strip -->
-<div class="live-strip" style="margin-top:10px;">
+<div class="live-strip">
   <div class="live-chip"><div class="live-dot"></div>MTR 正常行駛</div>
   <div class="live-chip">💱 1 USD = 7.83 HKD</div>
   <div class="live-chip">🌡️ 香港 26°C 多雲</div>
   <div class="live-chip">🏥 急症室 約3小時</div>
-  <div class="live-chip">🌊 天文台：黃色警告</div>
 </div>
 
-<!-- Hero -->
 <div style="padding:0 14px;">
   <div class="hero">
     <div class="hero-badge">🇭🇰 初來香港？從這裡開始</div>
     <h1>新移民 · 遊客<br>一站搵齊生活資訊</h1>
     <p>銀行開戶 · 醫院診所 · 子女入學<br>交通攻略 · 法律援助 · 政府服務</p>
     <div class="hero-btns">
-      <a class="hbtn hbtn-white" href="#">我係新移民</a>
-      <a class="hbtn hbtn-ghost" href="#">我係遊客</a>
+      <a class="hbtn hbtn-white" href="#businesses">我係新移民</a>
+      <a class="hbtn hbtn-ghost" href="#businesses">我係遊客</a>
     </div>
   </div>
 </div>
 
-<!-- Scene Cards -->
 <div class="sec">
   <div class="scene-row">
-    <a class="scene-card sc-immigrant" href="#">
+    <a class="scene-card sc-immigrant" href="#businesses">
       <div class="scene-emoji">🏠</div>
       <h3>新移民<br>必辦事項</h3>
       <p>簽證 · 開戶 · 租房<br>學校 · 福利</p>
       <span class="scene-arrow">›</span>
     </a>
-    <a class="scene-card sc-tourist" href="#">
+    <a class="scene-card sc-tourist" href="#businesses">
       <div class="scene-emoji">🗺️</div>
       <h3>遊客<br>實用指南</h3>
       <p>景點 · 交通 · 換匯<br>電話卡 · 購物</p>
@@ -568,256 +62,57 @@ header {
   </div>
 </div>
 
-<!-- 生活服務 -->
+<!-- 分類篩選 -->
+<div class="sec" id="businesses">
+  <div class="sec-head">
+    <div class="sec-title"><div class="sec-bar"></div>商家分類</div>
+  </div>
+  <div class="cat-scroll">
+    <button class="cat-btn active" onclick="filterCategory('all', this)">全部</button>
+    <button class="cat-btn" onclick="filterCategory('銀行', this)">🏦 銀行</button>
+    <button class="cat-btn" onclick="filterCategory('醫院', this)">🏥 醫院</button>
+    <button class="cat-btn" onclick="filterCategory('餐廳', this)">🍜 餐廳</button>
+    <button class="cat-btn" onclick="filterCategory('地產', this)">🏠 地產</button>
+    <button class="cat-btn" onclick="filterCategory('法律', this)">⚖️ 法律</button>
+    <button class="cat-btn" onclick="filterCategory('政府服務', this)">🏛️ 政府</button>
+    <button class="cat-btn" onclick="filterCategory('教育', this)">🎓 教育</button>
+    <button class="cat-btn" onclick="filterCategory('超市', this)">🛒 超市</button>
+  </div>
+</div>
+
+<!-- 商家列表 -->
 <div class="sec">
   <div class="sec-head">
-    <div class="sec-title"><div class="sec-bar"></div>生活服務</div>
-    <a class="sec-more" href="#">全部 ›</a>
+    <div class="sec-title">
+      <div class="sec-bar" style="background:var(--gold);"></div>
+      <span id="listTitle">推薦商家</span>
+    </div>
+    <span id="listCount" class="sec-more"></span>
   </div>
-  <div class="icon-grid">
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FEE8EC;">🏦</div>
-      <div class="i-label">銀行開戶</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E8F5E9;">🏥</div>
-      <div class="i-label">醫院診所</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E3F2FD;">🏫</div>
-      <div class="i-label">學校教育</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FFF3E0;">🏠</div>
-      <div class="i-label">租房買房</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#F3E5F5;">🚇</div>
-      <div class="i-label">交通出行</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E0F2F1;">⚖️</div>
-      <div class="i-label">法律援助</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FCE4EC;">📋</div>
-      <div class="i-label">證件簽證</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FFF8E1;">💼</div>
-      <div class="i-label">求職招聘</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#EDE7F6;">👨‍👩‍👧</div>
-      <div class="i-label">社會福利</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E0F7FA;">⋯</div>
-      <div class="i-label">更多</div>
-    </a>
+  <div id="businessList" class="biz-list">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>載入中…</p>
+    </div>
   </div>
 </div>
 
 <!-- 政府服務 -->
 <div class="sec">
   <div class="sec-head">
-    <div class="sec-title"><div class="sec-bar" style="background:var(--blue);"></div>政府 · 公共服務</div>
-    <a class="sec-more" href="#">更多 ›</a>
+    <div class="sec-title"><div class="sec-bar" style="background:#1565C0;"></div>政府 · 公共服務</div>
   </div>
   <div class="icon-grid">
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E3F2FD;">🪪</div>
-      <div class="i-label">入境事務處</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E8F5E9;">🏛️</div>
-      <div class="i-label">民政事務處</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FFF3E0;">📊</div>
-      <div class="i-label">稅務局</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FCE4EC;">🏘️</div>
-      <div class="i-label">房屋署</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#EDE7F6;">👮</div>
-      <div class="i-label">香港警察</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FEE8EC;">🔥</div>
-      <div class="i-label">消防處</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#F3E5F5;">🚌</div>
-      <div class="i-label">運輸署</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#FFF8E1;">💰</div>
-      <div class="i-label">綜援申請</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E0F2F1;">🏥</div>
-      <div class="i-label">醫院管理局</div>
-    </a>
-    <a class="i-item" href="#">
-      <div class="i-icon" style="background:#E0F7FA;">📮</div>
-      <div class="i-label">香港郵政</div>
-    </a>
-  </div>
-</div>
-
-<!-- 新手攻略 Horizontal Scroll -->
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-title"><div class="sec-bar" style="background:var(--gold);"></div>新手攻略</div>
-    <a class="sec-more" href="#">全部 ›</a>
-  </div>
-</div>
-<div class="h-scroll">
-  <a class="h-card" href="#">
-    <div class="h-card-icon">🏦</div>
-    <div class="h-card-title">銀行開戶<br>完整攻略</div>
-    <div class="h-card-sub">匯豐 · 渣打 · 中銀<br>所需文件一覽</div>
-  </a>
-  <a class="h-card" href="#">
-    <div class="h-card-icon">🚇</div>
-    <div class="h-card-title">八達通<br>使用指南</div>
-    <div class="h-card-sub">買卡 · 增值 · 退卡<br>全攻略</div>
-  </a>
-  <a class="h-card" href="#">
-    <div class="h-card-icon">🏫</div>
-    <div class="h-card-title">子女入學<br>申請流程</div>
-    <div class="h-card-sub">幼稚園到中學<br>時間表與手續</div>
-  </a>
-  <a class="h-card" href="#">
-    <div class="h-card-icon">🏥</div>
-    <div class="h-card-title">公私立醫院<br>睇病攻略</div>
-    <div class="h-card-sub">急症 · 專科 · 家庭醫生<br>怎麼選</div>
-  </a>
-  <a class="h-card" href="#">
-    <div class="h-card-icon">📋</div>
-    <div class="h-card-title">MPF 強積金<br>新人指引</div>
-    <div class="h-card-sub">供款 · 轉移 · 提取<br>基本知識</div>
-  </a>
-</div>
-<div class="gap-sm"></div>
-
-<!-- 熱門資訊 + 社區 Tabs -->
-<div class="sec">
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab(this,'news')">📰 熱門資訊</div>
-    <div class="tab" onclick="switchTab(this,'districts')">🗺️ 地區導航</div>
-    <div class="tab" onclick="switchTab(this,'qa')">💬 社區問答</div>
-  </div>
-
-  <div id="news" class="card-list" style="border-radius:0 0 var(--r) var(--r);">
-    <a class="card-item" href="#">
-      <div class="card-num hot">1</div>
-      <div class="card-body">
-        <div class="card-title">剛到香港第一個月，這10件事要馬上辦</div>
-        <div class="card-meta">📖 指南 · 28,400 人閱讀</div>
-      </div>
-      <div class="card-tag tag-hot">必看</div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-num hot">2</div>
-      <div class="card-body">
-        <div class="card-title">香港公立急症室等候攻略：哪間最快？</div>
-        <div class="card-meta">🏥 醫療 · 本週更新</div>
-      </div>
-      <div class="card-tag tag-new">最新</div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-num hot">3</div>
-      <div class="card-body">
-        <div class="card-title">BNO 續簽完整流程（2025年最新版）</div>
-        <div class="card-meta">📋 簽證 · 15,200 人閱讀</div>
-      </div>
-      <div class="card-tag tag-new">最新</div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-num">4</div>
-      <div class="card-body">
-        <div class="card-title">香港租房避坑指南：睇樓、簽約、押金</div>
-        <div class="card-meta">🏠 住屋 · 12,800 人閱讀</div>
-      </div>
-      <div class="card-tag tag-guide">指南</div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-num">5</div>
-      <div class="card-body">
-        <div class="card-title">內地駕照換領香港牌照手續詳解</div>
-        <div class="card-meta">🚗 交通 · 9,600 人閱讀</div>
-      </div>
-      <div class="card-tag tag-guide">指南</div>
-    </a>
-  </div>
-
-  <div id="districts" class="card-list" style="border-radius:0 0 var(--r) var(--r); display:none;">
-    <div style="padding:10px 12px; display:flex; flex-wrap:wrap; gap:7px; border-bottom:1px solid var(--border);">
-      <a class="hot-tag h" href="#">旺角</a>
-      <a class="hot-tag h" href="#">深水埗</a>
-      <a class="hot-tag" href="#">銅鑼灣</a>
-      <a class="hot-tag" href="#">中環</a>
-      <a class="hot-tag" href="#">尖沙咀</a>
-      <a class="hot-tag" href="#">沙田</a>
-      <a class="hot-tag" href="#">將軍澳</a>
-      <a class="hot-tag" href="#">荃灣</a>
-      <a class="hot-tag" href="#">元朗</a>
-      <a class="hot-tag" href="#">東涌</a>
-    </div>
-    <a class="card-item" href="#">
-      <div class="card-num hot">🏙️</div>
-      <div class="card-body">
-        <div class="card-title">旺角生活圈：新移民家庭資源大全</div>
-        <div class="card-meta">超市 · 診所 · 補習社 · 街市</div>
-      </div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-num">🏘️</div>
-      <div class="card-body">
-        <div class="card-title">深水埗：最多新來港家庭的社區</div>
-        <div class="card-meta">社福機構 · NGO · 廉價食堂</div>
-      </div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-num">🌿</div>
-      <div class="card-body">
-        <div class="card-title">沙田：適合有小孩家庭定居的地區</div>
-        <div class="card-meta">學校 · 公園 · 圖書館 · 商場</div>
-      </div>
-    </a>
-  </div>
-
-  <div id="qa" class="card-list" style="border-radius:0 0 var(--r) var(--r); display:none;">
-    <a class="card-item" href="#">
-      <div class="card-body">
-        <div class="card-title">問：BNO 續簽需要回國嗎？最近辦下來要多久？</div>
-        <div class="card-meta">💬 22 個回覆 · 2小時前</div>
-      </div>
-      <div class="card-tag tag-qa">熱議</div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-body">
-        <div class="card-title">問：帶小孩來港，幼稚園插班仲有位嗎？哪個區容易啲？</div>
-        <div class="card-meta">💬 18 個回覆 · 5小時前</div>
-      </div>
-      <div class="card-tag tag-qa">熱議</div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-body">
-        <div class="card-title">問：公立醫院睇皮膚科等了3個月，有推薦私家診所嗎？</div>
-        <div class="card-meta">💬 9 個回覆 · 昨天</div>
-      </div>
-    </a>
-    <a class="card-item" href="#">
-      <div class="card-body">
-        <div class="card-title">問：內地銀行卡在香港ATM提款有沒有問題？手續費幾多？</div>
-        <div class="card-meta">💬 14 個回覆 · 昨天</div>
-      </div>
-    </a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#E3F2FD;">🪪</div><div class="i-label">入境事務處</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#E8F5E9;">🏛️</div><div class="i-label">民政事務處</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#FFF3E0;">📊</div><div class="i-label">稅務局</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#FCE4EC;">🏘️</div><div class="i-label">房屋署</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#EDE7F6;">👮</div><div class="i-label">香港警察</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#FEE8EC;">🔥</div><div class="i-label">消防處</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#F3E5F5;">🚌</div><div class="i-label">運輸署</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#FFF8E1;">💰</div><div class="i-label">綜援申請</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#E0F2F1;">🏥</div><div class="i-label">醫管局</div></a>
+    <a class="i-item" href="#"><div class="i-icon" style="background:#E0F7FA;">📮</div><div class="i-label">香港郵政</div></a>
   </div>
 </div>
 
@@ -828,94 +123,34 @@ header {
   </div>
   <div class="emg-grid">
     <div class="emg-card red-card">
-      <div>
-        <div class="emg-label">警察 · 救護 · 消防</div>
-        <div class="emg-num">999</div>
-      </div>
+      <div><div class="emg-label">警察 · 救護 · 消防</div><div class="emg-num">999</div></div>
       <div class="emg-icon">🚨</div>
     </div>
     <div class="emg-card">
-      <div>
-        <div class="emg-label">入境處求助</div>
-        <div class="emg-num">1868</div>
-      </div>
+      <div><div class="emg-label">入境處求助</div><div class="emg-num">1868</div></div>
       <div class="emg-icon">🪪</div>
     </div>
     <div class="emg-card">
-      <div>
-        <div class="emg-label">撒瑪利亞防自殺</div>
-        <div class="emg-num" style="font-size:15px;">2389 2222</div>
-      </div>
+      <div><div class="emg-label">撒瑪利亞防自殺</div><div class="emg-num" style="font-size:15px;">2389 2222</div></div>
       <div class="emg-icon">💚</div>
     </div>
     <div class="emg-card">
-      <div>
-        <div class="emg-label">消費者委員會</div>
-        <div class="emg-num" style="font-size:15px;">2929 2222</div>
-      </div>
+      <div><div class="emg-label">消費者委員會</div><div class="emg-num" style="font-size:15px;">2929 2222</div></div>
       <div class="emg-icon">🛡️</div>
     </div>
   </div>
 </div>
 
-<!-- 大家都在搜 -->
-<div class="sec">
-  <div class="sec-head">
-    <div class="sec-title"><div class="sec-bar" style="background:var(--gold);"></div>大家都在搜</div>
-  </div>
-  <div class="tag-cloud">
-    <a class="hot-tag h" href="#">開銀行戶口</a>
-    <a class="hot-tag h" href="#">急症室等候</a>
-    <a class="hot-tag h" href="#">八達通充值</a>
-    <a class="hot-tag" href="#">子女入學</a>
-    <a class="hot-tag" href="#">綜援申請</a>
-    <a class="hot-tag" href="#">BNO 續簽</a>
-    <a class="hot-tag" href="#">換匯地點</a>
-    <a class="hot-tag" href="#">強積金 MPF</a>
-    <a class="hot-tag" href="#">電話卡推薦</a>
-    <a class="hot-tag" href="#">租房合約</a>
-    <a class="hot-tag" href="#">家庭醫生</a>
-    <a class="hot-tag" href="#">駕照換領</a>
-    <a class="hot-tag" href="#">公屋申請</a>
-    <a class="hot-tag" href="#">法律援助</a>
-  </div>
-</div>
+<div style="height:80px;"></div>
 
-<div class="gap"></div>
-
-<!-- Bottom Nav -->
 <nav class="bottom-nav">
-  <a class="nav-item active" href="#">
-    <span class="nav-icon">🏠</span>
-    首頁
-  </a>
-  <a class="nav-item" href="#">
-    <span class="nav-icon">🔍</span>
-    搜尋
-  </a>
-  <a class="nav-item" href="#" style="position:relative;">
-    <span class="nav-icon">🗺️</span>
-    地圖
-  </a>
-  <a class="nav-item" href="#">
-    <span class="nav-icon">💬</span>
-    問答
-  </a>
-  <a class="nav-item" href="#">
-    <span class="nav-icon">👤</span>
-    我的
-  </a>
+  <a class="nav-item active" href="index.html"><span class="nav-icon">🏠</span>首頁</a>
+  <a class="nav-item" href="#" onclick="document.getElementById('searchInput').focus();return false;"><span class="nav-icon">🔍</span>搜尋</a>
+  <a class="nav-item" href="#"><span class="nav-icon">🗺️</span>地圖</a>
+  <a class="nav-item" href="#"><span class="nav-icon">💬</span>問答</a>
+  <a class="nav-item" href="#"><span class="nav-icon">👤</span>我的</a>
 </nav>
 
-<script>
-function switchTab(el, id) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  ['news','districts','qa'].forEach(function(n){
-    var el = document.getElementById(n);
-    if(el) el.style.display = n === id ? 'block' : 'none';
-  });
-}
-</script>
+<script src="assets/app.js"></script>
 </body>
 </html>
