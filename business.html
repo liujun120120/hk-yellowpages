@@ -25,10 +25,9 @@
   <a class="nav-item" href="#"><span class="nav-icon">👤</span>我的</a>
 </nav>
 
-<script src="assets/app.js"></script>
 <script>
 const TOKEN = 'patFIhNaXmV8sQAep.0c5cd8ebd2d215b51b4e5b89595c6e9ece51101176dad89104c9e54d29c93ee4';
-const BASE = 'app38apVP58gOc2Gz';
+const BASE  = 'app38apVP58gOc2Gz';
 const TABLE = 'tblK3Zp28jh3uoSwt';
 
 const catEmoji = {
@@ -36,9 +35,10 @@ const catEmoji = {
   '法律':'⚖️','政府服務':'🏛️','教育':'🎓','超市':'🛒'
 };
 
+function fv(f, k) { return f[k] || f[k.charAt(0).toUpperCase()+k.slice(1)] || ''; }
+
 async function loadDetail() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const id = new URLSearchParams(window.location.search).get('id');
   if (!id) { window.location = 'index.html'; return; }
 
   try {
@@ -46,8 +46,7 @@ async function loadDetail() {
       headers: { 'Authorization': `Bearer ${TOKEN}` }
     });
     if (!res.ok) throw new Error();
-    const data = await res.json();
-    renderDetail(data);
+    renderDetail(await res.json());
   } catch(e) {
     document.getElementById('detailContent').innerHTML = `
       <div class="loading-state" style="padding-top:80px;">
@@ -58,79 +57,96 @@ async function loadDetail() {
 }
 
 function renderDetail(record) {
-  const f = record.fields;
-  const name = f.name || f.Name || '未命名';
-  const cat = f.category || f.Category || '';
-  const district = f.district || f.District || '';
-  const address = f.address || f.Address || '';
-  const phone = f.phone || f.Phone || '';
-  const whatsapp = f.whatsapp || f.Whatsapp || '';
-  const hours = f.hours || f.Hours || '';
-  const desc = f.description || f.Description || '';
-  const rating = f.rating || f.Rating || '';
-  const emoji = catEmoji[cat] || '📍';
+  const f        = record.fields;
+  const name     = fv(f,'name')        || '未命名';
+  const cat      = fv(f,'category')    || '';
+  const district = fv(f,'district')    || '';
+  const address  = fv(f,'address')     || '';
+  const phone    = fv(f,'phone')       || '';
+  const whatsapp = fv(f,'whatsapp')    || '';
+  const hours    = fv(f,'hours')       || '';
+  const desc     = fv(f,'description') || '';
+  const rating   = fv(f,'rating')      || '';
+  const website  = fv(f,'website')     || '';
+  const featured = f.featured || f.Featured || false;
+  const emoji    = catEmoji[cat] || '📍';
 
   document.title = `${name} — 香港通`;
 
-  const stars = rating ? Math.round(parseFloat(rating)) : 0;
-  const starsHtml = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+  const stars  = rating ? Math.round(parseFloat(rating)) : 0;
+  const starsH = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+
+  // 動作按鈕（最多3個）
+  const btns = [];
+  if (phone)   btns.push(`<a class="detail-action-btn da-phone" href="tel:${phone}">📞 致電</a>`);
+  const wa = whatsapp || phone;
+  if (wa)      btns.push(`<a class="detail-action-btn da-whatsapp" href="https://wa.me/852${wa.replace(/[-\s]/g,'')}" target="_blank">💬 WhatsApp</a>`);
+  if (website) btns.push(`<a class="detail-action-btn da-website" href="${website}" target="_blank">🌐 官方網站</a>`);
+
+  const btnGrid = btns.length === 3
+    ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0;">
+        ${btns[0]}${btns[1]}
+       </div>
+       <div style="margin:0 0 16px;">${btns[2]}</div>`
+    : `<div style="display:grid;grid-template-columns:${btns.length > 1 ? '1fr 1fr' : '1fr'};gap:8px;margin:16px 0;">${btns.join('')}</div>`;
 
   document.getElementById('detailContent').innerHTML = `
     <div class="detail-hero">
       <a class="detail-back" href="index.html">‹ 返回</a>
-      ${cat ? `<div class="detail-cat-badge">${emoji} ${cat}</div>` : ''}
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        ${cat ? `<span class="detail-cat-badge" style="margin-bottom:0;">${emoji} ${cat}</span>` : ''}
+        ${featured ? '<span class="featured-badge">✦ 推薦商家</span>' : ''}
+      </div>
       <div class="detail-name">${name}</div>
       <div class="detail-rating-row">
-        ${rating ? `<span class="detail-stars">${starsHtml}</span>
-        <span class="detail-rating-num">${parseFloat(rating).toFixed(1)}</span>` : ''}
+        ${rating ? `<span class="detail-stars">${starsH}</span>
+                    <span class="detail-rating-num">${parseFloat(rating).toFixed(1)}</span>` : ''}
         ${district ? `<span class="detail-district">📍 ${district}</span>` : ''}
       </div>
     </div>
 
     <div class="detail-body">
-      <div class="detail-actions">
-        ${phone ? `<a class="detail-action-btn da-phone" href="tel:${phone}">📞 致電</a>` : '<div></div>'}
-        ${whatsapp ? `<a class="detail-action-btn da-whatsapp" href="https://wa.me/852${whatsapp}" target="_blank">💬 WhatsApp</a>`
-          : phone ? `<a class="detail-action-btn da-whatsapp" href="https://wa.me/852${phone.replace(/[-\s]/g,'')}" target="_blank">💬 WhatsApp</a>` : ''}
-      </div>
+      ${btns.length ? btnGrid : ''}
 
       <div class="detail-info-card">
-        ${address ? `
-        <div class="detail-info-row">
+        ${address ? `<div class="detail-info-row">
           <div class="detail-info-icon">📍</div>
-          <div><div class="detail-info-label">地址</div><div class="detail-info-val">${address}</div></div>
+          <div><div class="detail-info-label">地址</div>
+               <div class="detail-info-val">${address}</div></div>
         </div>` : ''}
-        ${phone ? `
-        <div class="detail-info-row">
+        ${phone ? `<div class="detail-info-row">
           <div class="detail-info-icon">📞</div>
-          <div><div class="detail-info-label">電話</div><div class="detail-info-val"><a href="tel:${phone}" style="color:var(--red);text-decoration:none;">${phone}</a></div></div>
+          <div><div class="detail-info-label">電話</div>
+               <div class="detail-info-val"><a href="tel:${phone}" style="color:var(--red);text-decoration:none;">${phone}</a></div></div>
         </div>` : ''}
-        ${hours ? `
-        <div class="detail-info-row">
+        ${hours ? `<div class="detail-info-row">
           <div class="detail-info-icon">🕐</div>
-          <div><div class="detail-info-label">營業時間</div><div class="detail-info-val">${hours}</div></div>
+          <div><div class="detail-info-label">營業時間</div>
+               <div class="detail-info-val">${hours}</div></div>
         </div>` : ''}
-        ${district ? `
-        <div class="detail-info-row">
+        ${website ? `<div class="detail-info-row">
+          <div class="detail-info-icon">🌐</div>
+          <div><div class="detail-info-label">官方網站</div>
+               <div class="detail-info-val"><a href="${website}" target="_blank" style="color:var(--blue);text-decoration:none;word-break:break-all;">${website}</a></div></div>
+        </div>` : ''}
+        ${district ? `<div class="detail-info-row">
           <div class="detail-info-icon">🗺️</div>
-          <div><div class="detail-info-label">地區</div><div class="detail-info-val">${district}</div></div>
+          <div><div class="detail-info-label">地區</div>
+               <div class="detail-info-val">${district}</div></div>
         </div>` : ''}
       </div>
 
       ${desc ? `
-      <div class="sec-head" style="margin-top:16px;margin-bottom:8px;">
+      <div class="sec-head" style="margin-top:4px;margin-bottom:8px;">
         <div class="sec-title"><div class="sec-bar"></div>簡介</div>
       </div>
-      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px;font-size:13px;color:var(--ink2);line-height:1.7;">
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px;font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:12px;">
         ${desc}
       </div>` : ''}
 
       ${address ? `
-      <div class="sec-head" style="margin-top:16px;margin-bottom:8px;">
-        <div class="sec-title"><div class="sec-bar"></div>地圖</div>
-      </div>
       <a href="https://maps.google.com/?q=${encodeURIComponent(address)}" target="_blank"
-        style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:13px;color:var(--blue);text-decoration:none;font-weight:700;">
+        style="display:flex;align-items:center;justify-content:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:13px;color:var(--blue);text-decoration:none;font-weight:700;margin-bottom:12px;">
         🗺️ 在 Google Maps 查看
       </a>` : ''}
     </div>
